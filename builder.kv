@@ -1,0 +1,413 @@
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "4dp"
+    spacing: "4dp"
+    AnchorLayout:
+        anchor_x: "right"
+        size_hint_y: None
+        height: avatar.height
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "56dp", "56dp"
+            source: "images/logo_tobii.png"
+        MDLabel:
+            text: 'Tobii Pro V0.1'
+            halign: 'center'  
+    ScrollView:
+        MDList:
+            OneLineListItem:
+                text: "Home Page"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "welcome"
+            OneLineListItem:
+                text: "Setting"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "setting"
+            OneLineListItem:
+                text: "MENU"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "menu"
+            OneLineListItem:
+                text: "Data Analyser"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "data"
+            OneLineListItem:
+                text: "Video Glasses"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "video"
+            OneLineListItem:
+                text: "Record"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "record"
+
+MDScreen:
+    md_bg_color:56/255,40/255,81/255,1
+    ScreenManager:
+        id: screen_manager
+        WelcomeScreen:
+        SettingScreen:
+        MenuScreen:
+        DataScreen:
+        VideoScreen:
+        RecordScreen:      
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: ""
+        md_bg_color:35/255,30/255,60/255,1
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        MDFillRoundFlatButton:
+            md_bg_color:69/255,55/255,86/255,1
+            id: battery_level
+            text: "..."
+            font_size: 20
+            pos_hint: {"center_x":3, "center_y":0.5}
+    MDNavigationDrawer:
+        id: nav_drawer
+        md_bg_color:35/255,30/255,60/255,1
+        ContentNavigationDrawer:
+            screen_manager: screen_manager
+            nav_drawer: nav_drawer
+
+<WelcomeScreen>:
+    name: 'welcome'
+    on_enter: app.toolbar('Home Page')
+    on_enter: app.battery_level()
+    Image:
+        id: img1
+        source: "images/tobii.png"
+        pos_hint: {"center_x":0.5, "center_y":0.45}
+        size_hint: 0.5, 0.5
+    Image:
+        id: img2
+        source: "images/logo_iit.png"
+        pos_hint: {"center_x":0.25, "center_y":0.8}
+        size_hint: 0.15, 0.15
+    Image:
+        id: img3
+        source: "images/logo_tobii.png"
+        pos_hint: {"center_x":0.75, "center_y":0.8}
+        size_hint: 0.15, 0.15
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn1
+        text: "Start" if btn1.state == "normal" else "Starting ... "
+        font_size: 30
+        pos_hint: {"center_x":0.7, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.starting()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn2
+        text: "Help"
+        font_size: 30
+        pos_hint: {"center_x":0.3, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.help()
+        
+<SettingScreen>:
+    name: 'setting'
+    on_enter: app.toolbar('Setting Page')
+    on_enter: app.battery_level()
+    img4: img4
+    label1: label1
+    btn1: btn1
+    btn2: btn2
+    btn3: btn3
+    btn4: btn4
+    project_name: project_name
+    participant_name: participant_name
+    Image:
+        id: img2
+        source: "images/logo_iit.png"
+        pos_hint: {"center_x":0.25, "center_y":0.8}
+        size_hint: 0.15, 0.15
+    Image:
+        id: img3
+        source: "images/logo_tobii.png"
+        pos_hint: {"center_x":0.75, "center_y":0.8}
+        size_hint: 0.15, 0.15
+    MDRaisedButton:
+        id: btn0
+        text: "Refresh" if btn0.state == "normal" else "... "
+        font_size: 30
+        theme_text_color: "Custom"
+        text_color: 1, 1, 1, 1
+        size_hint: 0.1, 0.1
+        md_bg_color: (33/255, 150/255, 245/255, 1)
+        pos_hint: {"center_x":0.1, "center_y":0.1}
+        on_release:root.refresh()
+    MDRectangleFlatButton:
+        id: btn4
+        text: ""
+        font_size: 30
+        pos_hint: {"center_x":0.4, "center_y":0.1}
+        size_hint: 0.5, 0.1
+        disabled : False
+    MDRaisedButton:
+        id: btn1
+        text: "Connect" if btn1.state == "normal" else "... "
+        font_size: 30
+        theme_text_color: "Custom"
+        text_color: 1, 1, 1, 1
+        pos_hint: {"center_x":0.7, "center_y":0.1}
+        size_hint: 0.1, 0.1
+        md_bg_color: (130/255, 130/255, 130/255, 1)
+        disabled : True
+        on_release:root.connect()
+    MDRaisedButton:
+        id: btn2
+        text: "Calibrate" if btn2.state == "normal" else "... "
+        font_size: 30
+        theme_text_color: "Custom"
+        text_color: 1, 1, 1, 1
+        pos_hint: {"center_x":0.8, "center_y":0.1}
+        size_hint: 0.1, 0.1
+        md_bg_color: (130/255, 130/255, 130/255, 1)
+        disabled : True
+        on_release:root.show_target()       
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn3
+        text: "Run"
+        font_size: 30
+        pos_hint: {"center_x":0.93, "center_y":0.1}
+        size_hint: 0.1, 0.1
+        disabled : True
+        on_release:root.run()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn4
+        text: "Start Calibration" if btn4.state == "normal" else "Watch the target"
+        font_size: 30
+        pos_hint: {"center_x":2, "center_y":2}
+        size_hint: 0.3, 0.08 
+        on_release:root.calibration()
+    MDLabel:
+        id: label1
+        text: "Refresh to check Tobii Glasse"
+        font_size: '30sp'
+        color: 1, 1, 1, 1
+        size_hint: 0.6,0.2
+        pos_hint: {"center_x":0.5}
+    MDTextField:
+        id: project_name
+        text: ""
+        hint_text: "Project Name"
+        helper_text: ""
+        helper_text_mode: "on_focus"
+        icon_right: "arrow-down"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x': 0.5, 'center_y': 0.6}
+        size_hint_x:None
+        width:300
+    MDTextField:
+        id: participant_name
+        text: ""
+        hint_text: "Participant Name"
+        helper_text: ""
+        helper_text_mode: "on_focus"
+        icon_right: "arrow-down"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+        size_hint_x:None
+        width:300
+    Image:
+        id: img4
+        source: "images/target.jpeg"
+        size_hint_y: None
+        height: dp(200)
+        pos_hint: {"center_x":2, "center_y":2}
+
+<MenuScreen>:
+    name: 'menu'
+    on_enter: app.toolbar('MENU')
+    on_enter: app.battery_level()
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        
+        MDGridLayout:
+            size_hint_y:2
+            cols:1
+            padding:[dp(60),dp(70),dp(60),dp(70)]
+            spacing:dp(15)
+            ElementCard1:
+                image:"images/data_icon.png"
+                text:"Data Analyser"
+                subtext:"Matplotlib"
+                on_release: root.call_page('data')
+            ElementCard1:
+                image:"images/video_icon.png"
+                text:"Video Displayer"
+                subtext:"Open CV"
+                on_release: root.call_page('video')
+            ElementCard1:
+                image:"images/record_icon.png"
+                text:"Record Page"
+                subtext:"Tobii Glasses"
+                items_count:""
+                on_release: root.call_page('record')
+            ElementCard1:
+                image:"images/other_icon.png"
+                text:"Other 1"
+                subtext:"..."
+            ElementCard1:
+                image:"images/other_icon.png"
+                text:"Other 2"
+                subtext:"..."
+
+<ElementCard1@MDCard>:
+    md_bg_color:69/255,55/255,86/255,1
+    padding:dp(15)
+    spacing:dp(15)
+    radius:dp(25)
+    ripple_behavior: True
+    image:''
+    text:""
+    items_count:""
+    subtext:''
+
+    orientation:'horizontal'
+    Image:
+        source:root.image
+    MDBoxLayout:
+        orientation:'vertical'
+        MDLabel:
+            halign:"center"
+            text:root.text
+            font_style:"H6"
+        MDLabel:
+            halign:"center"
+            font_style:"Caption"
+            text:root.subtext
+ 
+<DataScreen>:
+    name: 'data'  
+    on_enter: app.toolbar('Data Displayer')
+    on_enter: app.battery_level()
+    on_enter: app.validation_connection()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn1
+        text: "MENU"
+        font_size: 30
+        pos_hint: {"center_x":0.7, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.call_menu()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn2
+        text: "Info"
+        font_size: 30
+        pos_hint: {"center_x":0.3, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.info()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn3
+        text: "Open Analyser"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        size_hint: 0.3, 0.08 
+        on_release: root.open_plt()
+
+<VideoScreen>:
+    name: 'video'
+    on_enter: app.toolbar('Video Displayer')
+    on_enter: app.battery_level()
+    on_enter: app.validation_connection()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn1
+        text: "MENU"
+        font_size: 30
+        pos_hint: {"center_x":0.7, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.call_menu()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn2
+        text: "Info"
+        font_size: 30
+        pos_hint: {"center_x":0.3, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.info()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn4
+        text: "Device Camera"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.7}
+        size_hint: 0.3, 0.1 
+        on_release: root.PC_cam()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn3
+        text: "Tobii Glasses Point"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        size_hint: 0.3, 0.1 
+        on_release: root.TG_cam_point()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn4
+        text: "Device Camera Line" 
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.3}
+        size_hint: 0.3, 0.1 
+        on_release: root.TG_cam_line()
+    
+<RecordScreen>:
+    name: 'record'
+    on_enter: app.toolbar('Recording Page')
+    on_enter: app.battery_level()
+    on_enter: app.validation_connection()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn1
+        text: "MENU"
+        font_size: 30
+        pos_hint: {"center_x":0.7, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.call_menu()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn2
+        text: "Info"
+        font_size: 30
+        pos_hint: {"center_x":0.3, "center_y":0.07}
+        size_hint: 0.3, 0.08 
+        on_release: root.info()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn3
+        text: "Start record"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.65}
+        size_hint: 0.3, 0.1 
+        on_release: root.start_record()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn4
+        text: "Pause record"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        size_hint: 0.3, 0.1 
+        on_release: root.pause_record()
+    MDFillRoundFlatButton:
+        md_bg_color:69/255,55/255,86/255,1
+        id: btn5
+        text: "Stop record"
+        font_size: 30
+        pos_hint: {"center_x":0.5, "center_y":0.35}
+        size_hint: 0.3, 0.1 
+        on_release: root.stop_record()
